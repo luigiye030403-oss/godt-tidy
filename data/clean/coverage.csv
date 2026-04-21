@@ -1,0 +1,127 @@
+country,region,years_total,n_donor_years,n_kidney_tx_years,n_liver_tx_years,n_heart_tx_years,n_lung_tx_years,has_gaps
+Austria,Europe,25,25,25,25,24,25,FALSE
+Belgium,Europe,25,25,25,25,24,25,FALSE
+Bulgaria,Europe,25,25,25,21,21,17,FALSE
+Croatia,Europe,25,25,25,25,24,15,FALSE
+Denmark,Europe,25,25,25,25,24,25,FALSE
+Finland,Europe,25,25,25,25,24,24,FALSE
+Greece,Europe,25,25,25,25,24,17,FALSE
+Hungary,Europe,25,25,25,25,24,15,FALSE
+Latvia,Europe,25,25,25,19,21,19,FALSE
+Netherlands,Europe,25,25,25,25,24,25,FALSE
+Poland,Europe,25,25,25,25,24,21,FALSE
+Portugal,Europe,25,25,25,25,24,18,FALSE
+Romania,Europe,25,25,25,25,24,19,FALSE
+Slovenia,Europe,25,25,25,25,24,15,FALSE
+Spain,Europe,25,25,25,25,24,25,FALSE
+Sweden,Europe,25,25,25,25,24,25,FALSE
+Switzerland,Europe,25,25,25,25,24,23,FALSE
+United States of America,America,25,25,25,25,24,24,FALSE
+Australia,Western Pacific,25,24,25,25,24,25,TRUE
+Cyprus,Europe,25,24,25,10,10,10,TRUE
+Czech Republic,Europe,25,24,24,24,23,24,TRUE
+Estonia,Europe,25,24,24,22,13,16,TRUE
+Ireland,Europe,25,24,24,23,21,18,FALSE
+Israel,Europe,25,24,24,24,23,24,FALSE
+Italy,Europe,25,24,25,25,24,24,TRUE
+Norway,Europe,25,24,24,24,23,24,TRUE
+Slovakia,Europe,25,24,24,23,23,19,TRUE
+United Kingdom,Europe,25,24,24,24,23,24,FALSE
+Iran (Islamic Republic of),Eastern Mediterranean,23,23,23,23,22,22,FALSE
+Lithuania,Europe,25,23,23,20,20,17,TRUE
+Türkiye,Europe,25,23,24,24,23,18,TRUE
+France,Europe,25,22,25,25,24,25,FALSE
+Germany,Europe,25,22,25,25,24,25,FALSE
+Iceland,Europe,25,22,22,11,11,10,FALSE
+Luxembourg,Europe,25,22,19,13,9,9,TRUE
+New Zealand,Western Pacific,25,22,22,22,21,22,FALSE
+Argentina,America,25,21,21,21,20,20,FALSE
+Brazil,America,25,21,21,24,20,17,FALSE
+Canada,America,25,21,25,25,24,24,TRUE
+Cuba,America,25,21,21,21,20,14,FALSE
+Malta,Europe,25,21,21,18,19,16,TRUE
+Mexico,America,25,21,21,21,20,18,FALSE
+Uruguay,America,25,21,21,19,20,17,FALSE
+Chile,America,25,20,20,20,19,16,FALSE
+Colombia,America,25,20,21,21,20,17,TRUE
+Dominican Republic,America,25,20,21,17,14,14,FALSE
+Ecuador,America,25,20,20,16,16,14,TRUE
+Guatemala,America,25,20,21,12,11,11,TRUE
+Japan,Western Pacific,25,20,21,21,20,20,FALSE
+Kuwait,Eastern Mediterranean,25,20,21,18,16,16,FALSE
+Paraguay,America,25,20,19,15,18,14,TRUE
+Saudi Arabia,Eastern Mediterranean,24,20,20,20,19,20,FALSE
+Singapore,Western Pacific,25,20,21,21,20,20,FALSE
+Thailand,South-East Asia,25,20,20,20,19,18,FALSE
+Panama,America,25,19,20,14,14,14,TRUE
+Republic of Korea,Western Pacific,25,19,20,20,19,20,TRUE
+Malaysia,Western Pacific,25,18,21,21,19,17,TRUE
+Nigeria,Africa,25,18,20,18,17,17,TRUE
+Pakistan,Eastern Mediterranean,25,18,20,18,14,14,TRUE
+Syrian Arab Republic,Eastern Mediterranean,25,18,19,16,16,16,TRUE
+Costa Rica,America,25,17,17,16,17,14,TRUE
+Georgia,Europe,25,17,23,17,16,16,TRUE
+Peru,America,25,17,17,18,15,15,TRUE
+Venezuela (Bolivarian Republic of),America,24,17,17,17,12,12,TRUE
+Ethiopia,Africa,25,16,16,16,16,16,FALSE
+Jordan,Eastern Mediterranean,25,16,17,17,16,9,TRUE
+Qatar,Eastern Mediterranean,25,16,16,16,16,16,FALSE
+Republic of Moldova,Europe,25,16,17,16,15,10,FALSE
+Tunisia,Eastern Mediterranean,25,16,16,16,14,11,TRUE
+Belarus,Europe,25,15,15,14,14,13,TRUE
+Bolivia (Plurinational State of),America,25,15,17,9,7,7,TRUE
+India,South-East Asia,25,15,18,18,18,13,FALSE
+Mongolia,Western Pacific,25,15,18,16,12,11,TRUE
+South Africa,Africa,25,15,15,15,14,15,TRUE
+Sudan,Eastern Mediterranean,23,15,16,15,15,15,TRUE
+Armenia,Europe,25,14,18,14,13,13,TRUE
+Oman,Eastern Mediterranean,25,14,15,11,9,9,TRUE
+Philippines,Western Pacific,25,14,21,12,8,8,TRUE
+Republic of North Macedonia,Europe,25,14,14,14,13,13,TRUE
+Kazakhstan,Europe,25,13,14,13,13,13,FALSE
+Kenya,Africa,25,13,17,12,12,12,TRUE
+State of Libya,Eastern Mediterranean,25,12,16,12,9,8,TRUE
+United Arab Emirates,Eastern Mediterranean,25,12,13,12,12,12,TRUE
+El Salvador,America,24,11,15,11,11,11,TRUE
+Russian Federation,Europe,23,11,14,13,11,11,FALSE
+Algeria,Africa,23,10,11,11,10,10,TRUE
+Bosnia and Herzegovina,Europe,25,10,10,9,9,9,TRUE
+China,Western Pacific,25,10,21,21,18,17,FALSE
+Serbia,Europe,25,10,10,10,10,8,TRUE
+Albania,Europe,25,9,12,10,7,7,TRUE
+Morocco,Eastern Mediterranean,23,9,9,9,9,9,TRUE
+Nicaragua,America,23,9,11,9,9,9,TRUE
+Bhutan,South-East Asia,23,8,9,9,9,8,TRUE
+Fiji,Western Pacific,23,8,7,8,7,7,TRUE
+Ghana,Africa,23,8,9,8,8,8,FALSE
+Lebanon,Eastern Mediterranean,23,8,8,8,8,6,TRUE
+Myanmar,South-East Asia,23,8,9,9,1,1,TRUE
+Viet Nam,Western Pacific,23,8,9,9,7,7,TRUE
+Maldives,South-East Asia,23,7,6,7,7,7,FALSE
+Nepal,South-East Asia,23,7,9,8,8,2,FALSE
+Trinidad and Tobago,America,25,7,7,7,7,7,FALSE
+Azerbaijan,Europe,23,6,6,6,6,6,TRUE
+Bangladesh,South-East Asia,25,6,12,9,11,11,FALSE
+Egypt,Eastern Mediterranean,23,6,10,9,5,6,TRUE
+Honduras,America,24,6,8,6,6,6,TRUE
+Indonesia,South-East Asia,23,6,7,7,6,2,TRUE
+Mauritius,Africa,23,6,7,6,6,6,FALSE
+Tajikistan,Europe,23,6,6,5,5,5,FALSE
+Ukraine,Europe,25,6,7,7,5,5,TRUE
+Cameroon,Africa,23,5,6,6,6,6,TRUE
+Kyrgyzstan,Europe,23,5,5,5,5,5,FALSE
+Senegal,Africa,23,5,5,5,5,5,TRUE
+Jamaica,America,25,4,4,4,4,4,FALSE
+Mali,Africa,23,4,4,4,4,2,FALSE
+Montenegro,Europe,23,4,4,3,3,3,FALSE
+Sri Lanka,South-East Asia,25,4,10,4,4,4,TRUE
+Barbados,America,25,3,3,3,3,3,FALSE
+Uzbekistan,Europe,23,3,3,2,1,1,TRUE
+Afghanistan,Eastern Mediterranean,24,2,2,2,2,2,FALSE
+Guyana,America,25,2,2,2,2,2,FALSE
+Brunei Darussalam,Western Pacific,23,1,1,1,0,0,FALSE
+Lao People's Democratic Republic,Western Pacific,23,1,0,0,0,0,FALSE
+Monaco,Europe,22,1,1,1,1,1,FALSE
+United Republic of Tanzania,Africa,23,1,1,1,1,1,FALSE
+Bahrain,Eastern Mediterranean,23,0,1,2,2,1,FALSE
+Palau,Western Pacific,23,0,0,0,0,0,FALSE

@@ -1,0 +1,127 @@
+country,iso3,region
+Algeria,DZA,Africa
+Cameroon,CMR,Africa
+Ethiopia,ETH,Africa
+Ghana,GHA,Africa
+Kenya,KEN,Africa
+Mali,MLI,Africa
+Mauritius,MUS,Africa
+Nigeria,NGA,Africa
+Senegal,SEN,Africa
+South Africa,ZAF,Africa
+United Republic of Tanzania,TZA,Africa
+Argentina,ARG,America
+Barbados,BRB,America
+Bolivia (Plurinational State of),BOL,America
+Brazil,BRA,America
+Canada,CAN,America
+Chile,CHL,America
+Colombia,COL,America
+Costa Rica,CRI,America
+Cuba,CUB,America
+Dominican Republic,DOM,America
+Ecuador,ECU,America
+El Salvador,SLV,America
+Guatemala,GTM,America
+Guyana,GUY,America
+Honduras,HND,America
+Jamaica,JAM,America
+Mexico,MEX,America
+Nicaragua,NIC,America
+Panama,PAN,America
+Paraguay,PRY,America
+Peru,PER,America
+Trinidad and Tobago,TTO,America
+United States of America,USA,America
+Uruguay,URY,America
+Venezuela (Bolivarian Republic of),VEN,America
+Afghanistan,AFG,Eastern Mediterranean
+Bahrain,BHR,Eastern Mediterranean
+Egypt,EGY,Eastern Mediterranean
+Iran (Islamic Republic of),IRN,Eastern Mediterranean
+Jordan,JOR,Eastern Mediterranean
+Kuwait,KWT,Eastern Mediterranean
+Lebanon,LBN,Eastern Mediterranean
+Morocco,MAR,Eastern Mediterranean
+Oman,OMN,Eastern Mediterranean
+Pakistan,PAK,Eastern Mediterranean
+Qatar,QAT,Eastern Mediterranean
+Saudi Arabia,SAU,Eastern Mediterranean
+State of Libya,LBY,Eastern Mediterranean
+Sudan,SDN,Eastern Mediterranean
+Syrian Arab Republic,SYR,Eastern Mediterranean
+Tunisia,TUN,Eastern Mediterranean
+United Arab Emirates,ARE,Eastern Mediterranean
+Albania,ALB,Europe
+Armenia,ARM,Europe
+Austria,AUT,Europe
+Azerbaijan,AZE,Europe
+Belarus,BLR,Europe
+Belgium,BEL,Europe
+Bosnia and Herzegovina,BIH,Europe
+Bulgaria,BGR,Europe
+Croatia,HRV,Europe
+Cyprus,CYP,Europe
+Czech Republic,CZE,Europe
+Denmark,DNK,Europe
+Estonia,EST,Europe
+Finland,FIN,Europe
+France,FRA,Europe
+Georgia,GEO,Europe
+Germany,DEU,Europe
+Greece,GRC,Europe
+Hungary,HUN,Europe
+Iceland,ISL,Europe
+Ireland,IRL,Europe
+Israel,ISR,Europe
+Italy,ITA,Europe
+Kazakhstan,KAZ,Europe
+Kyrgyzstan,KGZ,Europe
+Latvia,LVA,Europe
+Lithuania,LTU,Europe
+Luxembourg,LUX,Europe
+Malta,MLT,Europe
+Monaco,MCO,Europe
+Montenegro,MNE,Europe
+Netherlands,NLD,Europe
+Norway,NOR,Europe
+Poland,POL,Europe
+Portugal,PRT,Europe
+Republic of Moldova,MDA,Europe
+Republic of North Macedonia,MKD,Europe
+Romania,ROU,Europe
+Russian Federation,RUS,Europe
+Serbia,SRB,Europe
+Slovakia,SVK,Europe
+Slovenia,SVN,Europe
+Spain,ESP,Europe
+Sweden,SWE,Europe
+Switzerland,CHE,Europe
+Tajikistan,TJK,Europe
+Türkiye,TUR,Europe
+Ukraine,UKR,Europe
+United Kingdom,GBR,Europe
+Uzbekistan,UZB,Europe
+Bangladesh,BGD,South-East Asia
+Bhutan,BTN,South-East Asia
+India,IND,South-East Asia
+Indonesia,IDN,South-East Asia
+Maldives,MDV,South-East Asia
+Myanmar,MMR,South-East Asia
+Nepal,NPL,South-East Asia
+Sri Lanka,LKA,South-East Asia
+Thailand,THA,South-East Asia
+Australia,AUS,Western Pacific
+Brunei Darussalam,BRN,Western Pacific
+China,CHN,Western Pacific
+Fiji,FJI,Western Pacific
+Japan,JPN,Western Pacific
+Lao People's Democratic Republic,LAO,Western Pacific
+Malaysia,MYS,Western Pacific
+Mongolia,MNG,Western Pacific
+New Zealand,NZL,Western Pacific
+Palau,PLW,Western Pacific
+Philippines,PHL,Western Pacific
+Republic of Korea,KOR,Western Pacific
+Singapore,SGP,Western Pacific
+Viet Nam,VNM,Western Pacific

@@ -1,0 +1,81 @@
+country,year,check,value_a,value_b,diff
+Argentina,2021,actual_total = dbd + dcd,630,631,-1
+Argentina,2021,utilized_total = dbd + dcd,571,572,-1
+Armenia,2005,DD kidney tx > 2 x actual donors,45,0,45
+Armenia,2015,kidney_total = DD + LD,6,0,6
+Australia,2011,utilized_dcd > actual_dcd,329,86,243
+Australia,2011,utilized_total = dbd + dcd,245,413,-168
+Belgium,2003,DD liver tx > actual donors,239,237,2
+Canada,2005,DD liver tx > actual donors,421,414,7
+Canada,2011,utilized_dcd > actual_dcd,67,65,2
+Costa Rica,2014,DD kidney tx > 2 x actual donors,52,36,16
+Denmark,2004,DD kidney tx > 2 x actual donors,135,128,7
+Dominican Republic,2007,DD kidney tx > 2 x actual donors,1,0,1
+Estonia,2001,DD kidney tx > 2 x actual donors,30,28,2
+Estonia,2003,DD kidney tx > 2 x actual donors,30,28,2
+Estonia,2012,lung_total = DD + LD,9,2,7
+Estonia,2021,DD kidney tx > 2 x actual donors,45,42,3
+Finland,2003,DD kidney tx > 2 x actual donors,156,106,50
+France,2007,actual_total = dbd + dcd,1601,1656,-55
+Germany,2013,DD liver tx > actual donors,884,875,9
+Germany,2014,DD liver tx > actual donors,879,864,15
+Greece,2001,DD kidney tx > 2 x actual donors,74,64,10
+Greece,2010,DD kidney tx > 2 x actual donors,108,88,20
+Guatemala,2015,actual_total = dbd + dcd,15,0,15
+Ireland,2010,DD kidney tx > 2 x actual donors,151,116,35
+Israel,2001,DD kidney tx > 2 x actual donors,172,118,54
+Italy,2022,utilized_total = dbd + dcd,1460,1457,3
+Latvia,2019,utilized_total = dbd + dcd,19,12,7
+Lebanon,2014,actual_total = dbd + dcd,25,9,16
+Lebanon,2014,utilized_total = dbd + dcd,22,6,16
+Lithuania,2004,DD kidney tx > 2 x actual donors,57,14,43
+Luxembourg,2000,DD kidney tx > 2 x actual donors,8,6,2
+Luxembourg,2002,DD kidney tx > 2 x actual donors,5,2,3
+Luxembourg,2003,DD kidney tx > 2 x actual donors,9,6,3
+Luxembourg,2005,DD kidney tx > 2 x actual donors,9,0,9
+Luxembourg,2007,DD kidney tx > 2 x actual donors,12,2,10
+Malaysia,2021,DD kidney tx > 2 x actual donors,15,14,1
+Mexico,2004,DD kidney tx > 2 x actual donors,1716,660,1056
+Mexico,2020,lung_total = DD + LD,0,4,-4
+Mongolia,2011,kidney_total = DD + LD,69,65,4
+Nicaragua,2017,utilized_dcd > actual_dcd,1,0,1
+Nicaragua,2017,utilized_total = dbd + dcd,1,2,-1
+Norway,2021,DD liver tx > actual donors,97,96,1
+Pakistan,2024,DD liver tx > actual donors,2,1,1
+Panama,2004,DD kidney tx > 2 x actual donors,32,14,18
+Paraguay,2004,DD liver tx > actual donors,2,1,1
+Peru,2005,DD kidney tx > 2 x actual donors,46,44,2
+Philippines,2016,kidney_total = DD + LD,482,480,2
+Poland,2007,actual_total = dbd + dcd,352,302,50
+Portugal,2006,DD liver tx > actual donors,223,201,22
+Portugal,2007,DD liver tx > actual donors,263,252,11
+Republic of Moldova,2023,DD liver tx > actual donors,2,1,1
+Romania,2002,DD liver tx > actual donors,14,13,1
+Romania,2023,DD liver tx > actual donors,86,82,4
+Russian Federation,2020,lung_total = DD + LD,11,22,-11
+Singapore,2005,DD kidney tx > 2 x actual donors,43,42,1
+Slovenia,2001,DD kidney tx > 2 x actual donors,47,46,1
+Spain,2023,utilized_total = dbd + dcd,2076,2046,30
+Sweden,2000,DD liver tx > actual donors,104,97,7
+Sweden,2003,DD liver tx > actual donors,122,114,8
+Sweden,2004,DD liver tx > actual donors,124,123,1
+Sweden,2005,DD liver tx > actual donors,132,128,4
+Sweden,2009,DD liver tx > actual donors,144,128,16
+Sweden,2010,DD liver tx > actual donors,122,118,4
+Sweden,2014,DD liver tx > actual donors,171,166,5
+Sweden,2015,DD liver tx > actual donors,176,169,7
+Sweden,2016,DD liver tx > actual donors,197,195,2
+Switzerland,2006,DD liver tx > actual donors,86,80,6
+Switzerland,2019,DD liver tx > actual donors,166,157,9
+Tunisia,2015,kidney_total = DD + LD,125,28,97
+Türkiye,2001,DD liver tx > actual donors,107,89,18
+Türkiye,2010,kidney_total = DD + LD,2402,2502,-100
+United Arab Emirates,2013,DD kidney tx > 2 x actual donors,1,0,1
+United Arab Emirates,2014,DD kidney tx > 2 x actual donors,1,0,1
+United Arab Emirates,2023,DD liver tx > actual donors,98,87,11
+United Arab Emirates,2024,DD liver tx > actual donors,131,111,20
+United Kingdom,2004,DD kidney tx > 2 x actual donors,1905,1626,279
+United States of America,2000,actual_total = dbd + dcd,5985,5970,15
+United States of America,2001,actual_total = dbd + dcd,6080,6078,2
+United States of America,2002,actual_total = dbd + dcd,6190,6189,1
+United States of America,2011,lung_total = DD + LD,1850,1849,1
