@@ -1,6 +1,5 @@
 # EDA Insights Summary
 **Research question:** Do countries compensate for low deceased donation with higher living donation?  
-**Script:** `scripts/03_eda_living_vs_deceased.R`
 
 ---
 
