@@ -1,214 +1,202 @@
-library(tidyverse)
-library(ggrepel)
-library(here)
+# report/scripts/04_export_figures.R
+# Reproducible export of Figure 1 (scatter) and Figure 2 (quadrant) using ggplot2
 
-# ---- 0) Setup output folder ----
-fig_dir <- here::here("outputs", "figures")
-dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(readr)
+  library(ggplot2)
+  library(ggrepel)
+  library(scales)
+  library(here)
+})
 
-# ---- 1) Load data ----
-donors      <- readr::read_csv(here::here("data", "clean", "godt_donors_long.csv"), show_col_types = FALSE)
-transplants <- readr::read_csv(here::here("data", "clean", "godt_transplants_long.csv"), show_col_types = FALSE)
-coverage    <- readr::read_csv(here::here("data", "clean", "coverage.csv"), show_col_types = FALSE)
+# ----------------------------
+# 0) Paths
+# ----------------------------
+data_dir <- here("data", "clean")
+out_dir  <- here("outputs", "figures")
+dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
-# ---- 2) Build key variables ----
-deceased_rows <- donors %>%
-  filter(status == "actual", death_criterion == "total")
+donors_path     <- file.path(data_dir, "godt_donors_long.csv")
+tx_path         <- file.path(data_dir, "godt_transplants_long.csv")
+coverage_path   <- file.path(data_dir, "coverage.csv")
 
-living_rows <- transplants %>%
-  filter(organ == "kidney", source == "living")
+stopifnot(file.exists(donors_path), file.exists(tx_path), file.exists(coverage_path))
 
-# Coverage filter: keep countries with >=10 years in both indicators
-well_covered <- coverage %>%
+# ----------------------------
+# 1) Load data
+# ----------------------------
+donors <- read_csv(donors_path, show_col_types = FALSE)
+tx     <- read_csv(tx_path, show_col_types = FALSE)
+covg   <- read_csv(coverage_path, show_col_types = FALSE)
+
+# Expected columns (roughly):
+# donors: region,country,year,population_m,status,death_criterion,donors,donors_pmp
+# tx: region,country,year,population_m,organ,source,transplants,transplants_pmp
+# coverage: country,region,...,n_donor_years,n_kidney_tx_years,...
+
+# ----------------------------
+# 2) Filter: countries with >=10 years in both indicators
+# ----------------------------
+well_covered <- covg %>%
   filter(n_donor_years >= 10, n_kidney_tx_years >= 10) %>%
+  distinct(country) %>%
   pull(country)
 
-# Country averages
-deceased_avg <- deceased_rows %>%
-  filter(country %in% well_covered) %>%
+# X: deceased donors pmp (actual, total)
+x_df <- donors %>%
+  filter(country %in% well_covered,
+         status == "actual",
+         death_criterion == "total") %>%
   group_by(country, region) %>%
-  summarise(X = mean(donors_pmp, na.rm = TRUE), .groups = "drop")
-
-living_avg <- living_rows %>%
-  filter(country %in% well_covered) %>%
-  group_by(country) %>%
-  summarise(Y = mean(transplants_pmp, na.rm = TRUE), .groups = "drop")
-
-dat <- inner_join(deceased_avg, living_avg, by = "country")
-n   <- nrow(dat)
-
-# Correlations
-pearson  <- cor.test(dat$X, dat$Y, method = "pearson")
-spearman <- cor.test(dat$X, dat$Y, method = "spearman")
-
-# Medians and quadrant label
-med_X <- median(dat$X, na.rm = TRUE)
-med_Y <- median(dat$Y, na.rm = TRUE)
-
-dat <- dat %>%
-  mutate(
-    quadrant = case_when(
-      X >= med_X & Y >= med_Y ~ "High deceased / High living",
-      X <  med_X & Y >= med_Y ~ "Low deceased / High living (compensators)",
-      X >= med_X & Y <  med_Y ~ "High deceased / Low living",
-      TRUE                    ~ "Low deceased / Low living"
-    )
+  summarise(
+    x = mean(donors_pmp, na.rm = TRUE),
+    n_years_x = sum(!is.na(donors_pmp)),
+    .groups = "drop"
   )
 
-n_comp <- sum(dat$quadrant == "Low deceased / High living (compensators)")
+# Y: living donor kidney transplants pmp
+y_df <- tx %>%
+  filter(country %in% well_covered,
+         organ == "kidney",
+         source == "living") %>%
+  group_by(country, region) %>%
+  summarise(
+    y = mean(transplants_pmp, na.rm = TRUE),
+    n_years_y = sum(!is.na(transplants_pmp)),
+    .groups = "drop"
+  )
 
-label_these <- c(
-  "Türkiye", "Jordan", "Saudi Arabia", "Japan",
-  "United States of America", "Netherlands", "Iceland",
-  "Spain", "Croatia", "Slovenia", "Portugal"
+xy <- x_df %>%
+  inner_join(y_df, by = "country") %>%
+  mutate(
+    # keep one region label (prefer donors region if exists)
+    region = coalesce(region.x, region.y)
+  ) %>%
+  select(country, region, x, y, n_years_x, n_years_y) %>%
+  filter(is.finite(x), is.finite(y))
+
+cat("N countries in final XY:", nrow(xy), "\n")
+
+# ----------------------------
+# 3) Stats: Spearman correlation
+# ----------------------------
+spearman <- suppressWarnings(cor.test(xy$x, xy$y, method = "spearman", exact = FALSE))
+rho <- unname(spearman$estimate)
+pval <- spearman$p.value
+
+# Medians (use computed; round for display)
+x_med <- median(xy$x, na.rm = TRUE)
+y_med <- median(xy$y, na.rm = TRUE)
+
+# If you MUST match the reported values exactly, uncomment:
+# x_med <- 4.86
+# y_med <- 4.67
+
+comp_n <- sum(xy$x < x_med & xy$y > y_med)
+
+subtitle_scatter <- paste0(
+  "n = ", nrow(xy), " countries (≥10 years coverage).  ",
+  "Spearman ρ = ", sprintf("%.3f", rho), " (p = ", sprintf("%.3f", pval), ")."
 )
 
-base_theme <- theme_minimal(base_size = 12) +
-  theme(plot.title = element_text(face = "bold"))
+subtitle_quad <- paste0(
+  "Medians: X = ", sprintf("%.2f", x_med), " pmp,  Y = ", sprintf("%.2f", y_med),
+  " pmp.  Compensators: ", comp_n, "/", nrow(xy), " (", round(100*comp_n/nrow(xy)), "%)."
+)
 
-# ---- FIGURE 1: Scatter ----
-p1 <- ggplot(dat, aes(x = X, y = Y)) +
-  geom_point(aes(colour = region), size = 2.5, alpha = 0.85) +
-  geom_smooth(method = "lm", se = TRUE,
-              colour = "grey30", fill = "grey85", linewidth = 0.8) +
-  geom_label_repel(
-    data = filter(dat, country %in% label_these),
-    aes(label = country),
-    size = 2.8, max.overlaps = 20, label.padding = 0.15
+# Countries to label (edit freely)
+label_countries <- c(
+  "Jordan", "Türkiye", "Saudi Arabia", "Japan",
+  "Spain", "Croatia", "Slovenia", "Portugal",
+  "United States of America", "Netherlands", "Iceland"
+)
+
+xy <- xy %>%
+  mutate(label = ifelse(country %in% label_countries, country, NA_character_))
+
+# ----------------------------
+# 4) Theme helper (bigger spacing; avoids title/subtitle sticking)
+# ----------------------------
+base_theme <- theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(size = 22, face = "bold", margin = margin(b = 14)),
+    plot.subtitle = element_text(size = 14, margin = margin(b = 22)),
+    axis.title = element_text(size = 16, margin = margin(t = 10, r = 10, b = 10, l = 10)),
+    axis.text = element_text(size = 13),
+    legend.title = element_text(size = 14),
+    legend.text = element_text(size = 12),
+    legend.position = "right",
+    plot.margin = margin(16, 16, 16, 16),
+    panel.grid.minor = element_blank()
+  )
+
+# ----------------------------
+# 5) Figure 1: scatter + trendline + labels
+# ----------------------------
+p1 <- ggplot(xy, aes(x = x, y = y, colour = region)) +
+  geom_point(size = 3, alpha = 0.85) +
+  geom_smooth(method = "lm", se = TRUE, linewidth = 1, colour = "steelblue") +
+  geom_text_repel(
+    aes(label = label),
+    na.rm = TRUE,
+    size = 4.3,
+    box.padding = 0.6,
+    point.padding = 0.35,
+    min.segment.length = 0,
+    max.overlaps = Inf
   ) +
-  scale_colour_brewer(palette = "Set2", name = "WHO region") +
   labs(
-    title    = "Figure 1. Deceased donation vs living-donor kidney transplantation",
-    subtitle = paste0("Country averages 2000–2024 | n = ", n,
-                      " | Spearman rho = ", round(spearman$estimate, 3),
-                      " (p = ", signif(spearman$p.value, 3), ")",
-                      " | inclusion: >=10 years coverage"),
-    x        = "X: Deceased donors per million population (pmp)",
-    y        = "Y: Living-donor kidney transplants per million population (pmp)",
-    caption  = "Source: GODT (WHO/ONT)."
+    title = "Deceased donation vs living-donor kidney transplantation (country averages, 2000–2024)",
+    subtitle = subtitle_scatter,
+    x = "X: Deceased donors per million population (pmp)",
+    y = "Y: Living-donor kidney transplants per million population (pmp)",
+    colour = "WHO region"
   ) +
   base_theme
 
-ggsave(file.path(fig_dir, "fig1_scatter.png"), p1, width = 8.5, height = 5.5, dpi = 300)
-ggsave(file.path(fig_dir, "fig1_scatter.pdf"), p1, width = 8.5, height = 5.5)
+ggsave(filename = file.path(out_dir, "fig1_scatter.png"), plot = p1, width = 13.5, height = 8.5, dpi = 300)
+ggsave(filename = file.path(out_dir, "fig1_scatter.pdf"), plot = p1, width = 13.5, height = 8.5)
 
-# ---- FIGURE 2: Quadrant ----
-p2 <- ggplot(dat, aes(x = X, y = Y)) +
-  geom_vline(xintercept = med_X, linetype = "dashed", colour = "grey60") +
-  geom_hline(yintercept = med_Y, linetype = "dashed", colour = "grey60") +
-  geom_point(aes(colour = region), size = 2.5, alpha = 0.85) +
-  geom_label_repel(
-    data = filter(dat, country %in% label_these),
-    aes(label = country),
-    size = 2.8, max.overlaps = 20, label.padding = 0.15
+# ----------------------------
+# 6) Figure 2: quadrant + median lines + quadrant labels + labels
+# ----------------------------
+# positions for quadrant text (tuned to avoid label collisions)
+x_max <- max(xy$x, na.rm = TRUE)
+y_max <- max(xy$y, na.rm = TRUE)
+
+p2 <- ggplot(xy, aes(x = x, y = y, colour = region)) +
+  geom_point(size = 3, alpha = 0.85) +
+  geom_vline(xintercept = x_med, linetype = "dashed", linewidth = 0.9, colour = "steelblue") +
+  geom_hline(yintercept = y_med, linetype = "dashed", linewidth = 0.9, colour = "steelblue") +
+  # Quadrant labels (spread out)
+  annotate("text", x = 0.3 * x_med, y = y_max - 1.2,
+           label = "Low X / High Y\n(compensators)", hjust = 0, vjust = 1, size = 5) +
+  annotate("text", x = x_max - 0.35 * (x_max - x_med), y = y_max - 1.2,
+           label = "High X / High Y\n(high capacity)", hjust = 0, vjust = 1, size = 5) +
+  annotate("text", x = 0.3 * x_med, y = 0.9,
+           label = "Low X / Low Y\n(low overall)", hjust = 0, vjust = 0, size = 5) +
+  annotate("text", x = x_max - 0.35 * (x_max - x_med), y = 0.9,
+           label = "High X / Low Y\n(deceased-only)", hjust = 0, vjust = 0, size = 5) +
+  geom_text_repel(
+    aes(label = label),
+    na.rm = TRUE,
+    size = 4.3,
+    box.padding = 0.6,
+    point.padding = 0.35,
+    min.segment.length = 0,
+    max.overlaps = Inf
   ) +
-  scale_colour_brewer(palette = "Set2", name = "WHO region") +
   labs(
-    title    = "Figure 2. Quadrant analysis: four donor-system types",
-    subtitle = paste0("Dashed lines = medians | X = ", round(med_X, 2),
-                      " pmp, Y = ", round(med_Y, 2),
-                      " pmp | compensators: ", n_comp, "/", n,
-                      " (", round(100 * n_comp / n), "%)"),
-    x        = "X: Deceased donors pmp",
-    y        = "Y: Living-donor kidney transplants pmp",
-    caption  = "Source: GODT (WHO/ONT)."
+    title = "Quadrant analysis: deceased donation vs living kidney transplantation",
+    subtitle = subtitle_quad,
+    x = "X: Deceased donors pmp (country average, 2000–2024)",
+    y = "Y: Living-donor kidney transplants pmp (country average, 2000–2024)",
+    colour = "WHO region"
   ) +
   base_theme
 
-ggsave(file.path(fig_dir, "fig2_quadrant.png"), p2, width = 8.5, height = 5.5, dpi = 300)
-ggsave(file.path(fig_dir, "fig2_quadrant.pdf"), p2, width = 8.5, height = 5.5)
+ggsave(filename = file.path(out_dir, "fig2_quadrant.png"), plot = p2, width = 13.5, height = 8.5, dpi = 300)
+ggsave(filename = file.path(out_dir, "fig2_quadrant.pdf"), plot = p2, width = 13.5, height = 8.5)
 
-# ---- FIGURE 3: Boxplot (group comparison) ----
-dat2 <- dat %>%
-  mutate(deceased_group = if_else(X < med_X,
-                                  "Low deceased (below median X)",
-                                  "High deceased (above median X)"))
-
-group_summary <- dat2 %>%
-  group_by(deceased_group) %>%
-  summarise(mean_Y = mean(Y, na.rm = TRUE), .groups = "drop")
-
-mean_low  <- group_summary$mean_Y[group_summary$deceased_group == "Low deceased (below median X)"]
-mean_high <- group_summary$mean_Y[group_summary$deceased_group == "High deceased (above median X)"]
-
-p3 <- ggplot(dat2, aes(x = deceased_group, y = Y, fill = deceased_group)) +
-  geom_boxplot(alpha = 0.7, show.legend = FALSE) +
-  geom_jitter(width = 0.15, alpha = 0.5, size = 1.5, show.legend = FALSE) +
-  labs(
-    title    = "Figure 3. Living-donor kidney transplants by deceased-donation group",
-    subtitle = paste0("Mean Y (high vs low deceased): ",
-                      round(mean_high, 2), " vs ", round(mean_low, 2), " pmp"),
-    x        = NULL,
-    y        = "Y: Living-donor kidney transplants pmp",
-    caption  = "Source: GODT (WHO/ONT)."
-  ) +
-  base_theme
-
-ggsave(file.path(fig_dir, "fig3_boxplot.png"), p3, width = 8.5, height = 5.0, dpi = 300)
-ggsave(file.path(fig_dir, "fig3_boxplot.pdf"), p3, width = 8.5, height = 5.0)
-
-# ---- FIGURE 4: Histograms (one figure with facets) ----
-dat_long <- dat %>%
-  select(X, Y) %>%
-  pivot_longer(cols = c(X, Y), names_to = "metric", values_to = "value") %>%
-  mutate(metric = recode(metric,
-                         X = "X: Deceased donors pmp",
-                         Y = "Y: Living kidney transplants pmp"))
-
-p4 <- ggplot(dat_long, aes(x = value)) +
-  geom_histogram(bins = 20, colour = "white") +
-  facet_wrap(~ metric, scales = "free_x") +
-  labs(
-    title   = "Figure 4. Distributions of X and Y (country averages)",
-    subtitle= "Both distributions are right-skewed (motivation for Spearman correlation).",
-    x       = NULL,
-    y       = "Number of countries",
-    caption = "Source: GODT (WHO/ONT)."
-  ) +
-  base_theme
-
-ggsave(file.path(fig_dir, "fig4_histograms.png"), p4, width = 8.5, height = 5.0, dpi = 300)
-ggsave(file.path(fig_dir, "fig4_histograms.pdf"), p4, width = 8.5, height = 5.0)
-
-# ---- FIGURE 5: Time trends (one figure with facets) ----
-compensators <- c("Türkiye", "Jordan", "Japan")
-reference    <- c("Spain", "Croatia", "Slovenia")
-highlight    <- c(compensators, reference)
-
-time_deceased <- deceased_rows %>%
-  filter(country %in% highlight) %>%
-  select(country, year, value = donors_pmp) %>%
-  mutate(series = "Deceased donors pmp")
-
-time_living <- living_rows %>%
-  filter(country %in% highlight) %>%
-  select(country, year, value = transplants_pmp) %>%
-  mutate(series = "Living kidney transplants pmp")
-
-time_dat <- bind_rows(time_deceased, time_living) %>%
-  mutate(group = if_else(country %in% compensators,
-                         "Compensator", "Reference (high deceased)"))
-
-p5 <- ggplot(time_dat, aes(x = year, y = value, colour = country, linetype = group)) +
-  geom_line(linewidth = 0.9, na.rm = TRUE) +
-  facet_wrap(~ series, scales = "free_y") +
-  scale_colour_brewer(palette = "Dark2") +
-  labs(
-    title    = "Figure 5. Time trends for selected countries (2000–2024)",
-    subtitle = "Solid = compensators | Dashed = high-deceased reference countries",
-    x        = "Year",
-    y        = NULL,
-    colour   = "Country",
-    linetype = "Group",
-    caption  = "Source: GODT (WHO/ONT). Interpret with caution due to reporting gaps."
-  ) +
-  base_theme
-
-ggsave(file.path(fig_dir, "fig5_time_trends.png"), p5, width = 10, height = 5.5, dpi = 300)
-ggsave(file.path(fig_dir, "fig5_time_trends.pdf"), p5, width = 10, height = 5.5)
-
-cat("\nSaved figures to: ", fig_dir, "\n")
-cat("n countries: ", n, "\n")
-cat("Spearman rho: ", round(spearman$estimate, 3), " (p=", signif(spearman$p.value,3), ")\n", sep = "")
-cat("Pearson r: ", round(pearson$estimate, 3), " (p=", signif(pearson$p.value,3), ")\n", sep = "")
-cat("Compensators: ", n_comp, "/", n, " (", round(100*n_comp/n), "%)\n", sep = "")
+cat("Saved figures to:", out_dir, "\n")
