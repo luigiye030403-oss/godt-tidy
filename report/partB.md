@@ -1,6 +1,6 @@
 # Part B: content
 **Project title:** Stats Project 2026 — Living vs Deceased Donation  
-**Team members + student IDs:** [Name1, ID] • [Name2, ID] • [Name3, ID] • [Name4, ID]
+**Team members + student IDs:** [Luigi_Ye,3290260] • [Haotian_Yang,3343816] • [Goran_Elias_Rutberg,3404027] • [Fan_Zhu,3276264]
 
 ## Research question
 Do countries compensate for low deceased donation with higher living donation?
