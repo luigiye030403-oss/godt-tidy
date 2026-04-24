@@ -20,7 +20,7 @@ The quadrant analysis reveals heterogeneity across countries. A small “compens
 Overall, the data do not support a universal substitution/compensation hypothesis. Instead, distinct regional system models appear: a Western European model centred on deceased donation and a smaller set of countries where living donation is relatively strong despite weak deceased donation. We do not test causal mechanisms. Finally, many countries have reporting gaps, so time trends should be interpreted with caution (see issues_log.md).
 
 ## Figures to include in the final 2-page PDF
-**Figure 1 (scatter):** `outputs/figures/fig1_scatter.(png/pdf)`  fig2_quadrant.png
+**Figure 1 (scatter):** `outputs/figures/fig1_scatter.(png/pdf)`  
 Caption: Deceased donation vs living-donor kidney transplantation (country averages 2000–2024). n = 89 (≥10 years coverage in both indicators). Spearman ρ = 0.111 (p = 0.302). Units: pmp. Source: GODT (WHO/ONT).
 
 **Figure 2 (quadrant):** `outputs/figures/fig2_quadrant.(png/pdf)`  
